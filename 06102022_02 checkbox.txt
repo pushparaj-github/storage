@@ -1,0 +1,83 @@
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import Checkbox from './Hello';
+import './style.css';
+
+const checkboxes = [
+  {
+    name: 'check-box-1',
+    key: 'checkBox1',
+    id: 'one',
+    label: 'Check Box 1',
+  },
+  {
+    name: 'check-box-2',
+    key: 'checkBox2',
+    id: 'two',
+    label: 'Check Box 2',
+  },
+  {
+    name: 'check-box-3',
+    key: 'checkBox3',
+    id: 'three',
+    label: 'Check Box 3',
+  },
+  {
+    name: 'check-box-4',
+    key: 'checkBox4',
+    id: 'four',
+    label: 'Check Box 4',
+  },
+];
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showActionFilterList: false,
+      checkedItems: new Map(),
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  showList = () =>
+    this.setState((prevState) => ({
+      showActionFilterList: !prevState.showActionFilterList,
+    }));
+
+  handleChange(e) {
+    const item = e.target.name;
+    const isChecked = e.target.checked;
+    this.setState((prevState) => ({
+      checkedItems: prevState.checkedItems.set(item, isChecked),
+    }));
+    if (e.target.name == 'check-box-1' && isChecked) {
+      console.log(e.target.name);
+    }
+  }
+
+  render() {
+    return (
+      <>
+        <p onClick={this.showList}>click</p>
+        <br />
+        <React.Fragment>
+          {checkboxes.map((item) => (
+            <label key={item.key}>
+              {item.name}
+              <Checkbox
+                name={item.name}
+                checked={this.state.checkedItems.get(item.name)}
+                onChange={this.handleChange}
+              />
+            </label>
+          ))}
+        </React.Fragment>
+      </>
+    );
+  }
+}
+
+render(<App />, document.getElementById('root'));
