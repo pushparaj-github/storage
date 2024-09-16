@@ -104,3 +104,13 @@ public class GetOidcAuth
   </ItemGroup>
 
 </Project>
+
+-----------
+Dictionary<string, object> dict = new Dictionary<string, object>();
+
+foreach (var claim in result.User.Claims)
+{
+    dict.Add(claim.Type.ToString(), claim.Value.ToString());
+}
+
+var serialized = JsonSerializer.Serialize(dict);
